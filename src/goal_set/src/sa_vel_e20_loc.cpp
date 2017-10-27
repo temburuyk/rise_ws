@@ -45,7 +45,7 @@ geometry_msgs::Point s_v;
 bool check_updated_path=true;
 geometry_msgs::Pose previous_position_in_map,current_pos_in_map,current_local_pos,previous_local_pos;
 
-nav_msgs::Path previous_path;
+nav_msgs::Path previous_path,new_path;
 
 
 void current_heading(const geometry_msgs::Pose2D::ConstPtr& msg){
@@ -60,8 +60,8 @@ void current_heading(const geometry_msgs::Pose2D::ConstPtr& msg){
   if(abs(theta_curr)>180) theta_curr=360-abs(theta_curr);
 
   theta_curr = -theta_curr;
-  cout<<" theta_curr "<<theta_curr<<endl;
-  cout<<" theta_initial "<<theta_initial<<endl;
+  //cout<<" theta_curr "<<theta_curr<<endl;
+  //cout<<" theta_initial "<<theta_initial<<endl;
 }
 
 void car_vel(const std_msgs::Bool::ConstPtr& msg)
@@ -110,76 +110,10 @@ void car_vel(const std_msgs::Bool::ConstPtr& msg)
 
 void sa_vel(const nav_msgs::Path::ConstPtr& msg)
 {
-  if(!msg->poses.empty())
-  {
-    if(previous_path.header.stamp==msg->header.stamp) 
-      check_updated_path = false;
-    else check_updated_path = true;
-    if(check_updated_path)
-    {
-      cout<<"new_path"<<endl;
-      previous_path = (*msg);
-      for(int i=msg->poses.size()-1;i>=0;i--)
-      {
-
-          if(abs(msg->poses[i].pose.position.y - y-2) <  res_path)
-          {
-            y_des_i = i;
-            cout<<i<<"  "<<msg->poses.size()<<endl;
-            break;
-          }
-      }
-      x_des = msg->poses[y_des_i].pose.position.x;
-      y_des = msg->poses[y_des_i].pose.position.y;
-      theta_des = atan((x_des-20)/(y_des-2));
-      previous_position_in_map.position.x = 20;previous_position_in_map.position.y = 2;
-      previous_local_pos.position.x=current_local_pos.position.x;
-      previous_local_pos.position.y=current_local_pos.position.y;
-    }
-    else
-    {
-      cout<<"old_path"<<endl;
-      for(int i=previous_path.poses.size()-1;i>=0;i--)
-      {
-
-          if(abs(previous_path.poses[i].pose.position.y-y-current_pos_in_map.position.y)<res_path)
-          {
-            y_des_i = i;
-            cout<<i<<"  "<<previous_path.poses.size()<<endl;
-            break;
-          }
-      }
-      x_des = previous_path.poses[y_des_i].pose.position.x;
-      y_des = previous_path.poses[y_des_i].pose.position.y;
-      theta_des=atan((x_des-current_pos_in_map.position.x)/(y_des-current_pos_in_map.position.y));
-      previous_position_in_map = current_pos_in_map;
-    }
-
-
-   
-    theta_err = theta_des - theta_curr*DEG_TO_RAD; 
-    integral = integral + theta_err*ittime;
-    diff = (theta_err - err_prior)/ittime;
-
-    theta_out = KP*theta_err + KI*integral + KD*diff;
-    //str_ang_cmd = (theta_out*40*N)/90;
-    err_prior = theta_err;
-    theta_out = theta_out*RAD_TO_DEG;
-    if (theta_out>40 )
-    theta_out = 40;
-    else if(theta_out <-40)
-       theta_out = -40;
-
-
-    s_v.y= theta_out;
-    str_can = theta_out*0.9 + 140;
-    for (int i = 0; i<3;i++)
-      {
-        str_can_[i] = str_can/pow(10,(2-i));
-        str_can = str_can%(int)pow(10,(2-i));
-      }
-     
-  }
+ 
+ if(!msg->poses.empty())
+ new_path = (*msg); 
+ 
 }
 void update_curr_position()
 {
@@ -207,7 +141,7 @@ int main(int argc, char **argv)
   ros::Subscriber car_heading = n2.subscribe("/newpath_required", 1, car_vel);
 
 
-  ros::Rate loop_rate(200);
+ros::Rate loop_rate(20);
 //ros::spin();
 
   while (ros::ok())
@@ -240,6 +174,74 @@ cout<<final_can_[i];*/
     serial_stream.write(final_can_,16) ;
 
 */
+
+    if(previous_path.header.stamp==new_path.header.stamp) 
+      check_updated_path = false;
+    else check_updated_path = true;
+    cout<<"check_updated_path "<<check_updated_path<<endl;
+    if(check_updated_path&&!new_path.poses.empty())
+    {
+      cout<<"new_path"<<endl;
+      previous_path = new_path;
+      for(int i=new_path.poses.size()-1;i>=0;i--)
+      {
+
+          if(abs(new_path.poses[i].pose.position.y - y-2) <  res_path)
+          {
+            y_des_i = i;
+            cout<<i<<"  "<<new_path.poses.size()<<endl;
+            break;
+          }
+      }
+      x_des = new_path.poses[y_des_i].pose.position.x;
+      y_des = new_path.poses[y_des_i].pose.position.y;
+      theta_des = atan((x_des-20)/(y_des-2));
+      previous_position_in_map.position.x = 20;previous_position_in_map.position.y = 2;
+      previous_local_pos.position.x=current_local_pos.position.x;
+      previous_local_pos.position.y=current_local_pos.position.y;
+    }
+  else if(!previous_path.poses.empty())
+    {
+      cout<<"old_path"<<endl;
+      for(int i=previous_path.poses.size()-1;i>=0;i--)
+      {
+
+          if(abs(previous_path.poses[i].pose.position.y-y-current_pos_in_map.position.y)<res_path)
+          {
+            y_des_i = i;
+            cout<<i<<"  "<<previous_path.poses.size()<<endl;
+            break;
+          }
+      }
+      x_des = previous_path.poses[y_des_i].pose.position.x;
+      y_des = previous_path.poses[y_des_i].pose.position.y;
+      theta_des=atan((x_des-current_pos_in_map.position.x)/(y_des-current_pos_in_map.position.y));
+      previous_position_in_map = current_pos_in_map;
+    }
+
+   
+    theta_err = theta_des - theta_curr*DEG_TO_RAD; 
+    integral = integral + theta_err*ittime;
+    diff = (theta_err - err_prior)/ittime;
+
+    theta_out = KP*theta_err + KI*integral + KD*diff;
+    //str_ang_cmd = (theta_out*40*N)/90;
+    err_prior = theta_err;
+    theta_out = theta_out*RAD_TO_DEG;
+    if (theta_out>40 )
+    theta_out = 40;
+    else if(theta_out <-40)
+       theta_out = -40;
+
+
+    s_v.y= theta_out;
+    str_can = theta_out*0.9 + 140;
+    for (int i = 0; i<3;i++)
+      {
+        str_can_[i] = str_can/pow(10,(2-i));
+        str_can = str_can%(int)pow(10,(2-i));
+      } 
+
 
    ros::spinOnce();
 
