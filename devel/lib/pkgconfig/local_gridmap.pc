@@ -1,0 +1,8 @@
+prefix=/home/yashwant/rise_ws/devel
+
+Name: local_gridmap
+Description: Description of local_gridmap
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/yashwant/rise_ws/devel/lib 
+Requires: 

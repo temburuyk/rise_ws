@@ -1,0 +1,2 @@
+cv_bridge:goal_set:grid_fused:lane_detect:liblms1xx:lms1xx:local_gridmap:map_server:nmea_navsat_driver:path_planner-master:roboteq:sparton_main
+-DCATKIN_DEVEL_PREFIX=/home/yashwant/rise_ws/devel -DCMAKE_INSTALL_PREFIX=/home/yashwant/rise_ws/install -G Unix Makefiles

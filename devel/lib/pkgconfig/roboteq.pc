@@ -1,0 +1,8 @@
+prefix=/home/yashwant/rise_ws/devel
+
+Name: roboteq
+Description: Description of roboteq
+Version: 0.0.0
+Cflags: -I/home/yashwant/rise_ws/devel/include -I/home/yashwant/rise_ws/src/roboteq/include
+Libs: -L/home/yashwant/rise_ws/devel/lib -l:/opt/ros/indigo/lib/libroscpp.so -l:/usr/lib/x86_64-linux-gnu/libboost_signals.so -l:/usr/lib/x86_64-linux-gnu/libboost_filesystem.so -l:/opt/ros/indigo/lib/librosconsole.so -l:/opt/ros/indigo/lib/librosconsole_log4cxx.so -l:/opt/ros/indigo/lib/librosconsole_backend_interface.so -l:/usr/lib/liblog4cxx.so -l:/usr/lib/x86_64-linux-gnu/libboost_regex.so -l:/opt/ros/indigo/lib/libxmlrpcpp.so -l:/opt/ros/indigo/lib/libroscpp_serialization.so -l:/opt/ros/indigo/lib/librostime.so -l:/usr/lib/x86_64-linux-gnu/libboost_date_time.so -l:/opt/ros/indigo/lib/libcpp_common.so -l:/usr/lib/x86_64-linux-gnu/libboost_system.so -l:/usr/lib/x86_64-linux-gnu/libboost_thread.so -l:/usr/lib/x86_64-linux-gnu/libpthread.so -l:/usr/lib/x86_64-linux-gnu/libconsole_bridge.so -lRoboteqDevice.cpp
+Requires: geometry_msgs roscpp sensor_msgs std_msgs message_runtime

@@ -1,0 +1,8 @@
+prefix=/home/yashwant/rise_ws/devel
+
+Name: map_server
+Description: Description of map_server
+Version: 1.13.1
+Cflags: -I/home/yashwant/rise_ws/src/map_server/include
+Libs: -L/home/yashwant/rise_ws/devel/lib -lmap_server_image_loader
+Requires: roscpp tf nav_msgs

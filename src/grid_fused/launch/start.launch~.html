@@ -1,0 +1,8 @@
+<!--xml-->
+ <launch>
+ <!-- <node pkg="vectornav" type="vn200_interface" name="vn200_interfacer" output="screen"></node>-->
+  <node pkg="grid" type="local_map" name="local_map" output="screen"></node> 
+  <node pkg="grid" type="pose_publish" name="pose_publish" output="screen"></node>
+  <node pkg="hybrid_astar" type="hybrid_astar" name="hybrid_astar" output="screen"></node>
+<node pkg="hybrid_astar" type="tf_broadcaster" name="tf_broadcaster" output="screen"></node>
+</launch>

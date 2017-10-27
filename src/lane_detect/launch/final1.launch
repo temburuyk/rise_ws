@@ -1,0 +1,29 @@
+<!--xml-->
+<launch>
+  <node ns="camera1" pkg="uvc_camera" type="uvc_camera_node" name="uvc_camera_1" output="screen">
+    <param name="width" type="int" value="640" />
+    <param name="height" type="int" value="480" />
+    <param name="fps" type="int" value="20" />
+    <param name="frame" type="string" value="webcam" />
+    <param name="device" type="string" value="/dev/video1" />
+  </node>
+  <node ns="camera2" pkg="uvc_camera" type="uvc_camera_node" name="uvc_camera_2" output="screen">
+    <param name="width" type="int" value="640" />
+    <param name="height" type="int" value="480" />
+    <param name="fps" type="int" value="20" />
+    <param name="frame" type="string" value="webcam" />
+    <param name="device" type="string" value="/dev/video2" />
+  </node> 
+  <node ns="camera3" pkg="uvc_camera" type="uvc_camera_node" name="uvc_camera_3" output="screen">
+    <param name="width" type="int" value="640" />
+    <param name="height" type="int" value="480" />
+    <param name="fps" type="int" value="20" />
+    <param name="frame" type="string" value="webcam" />
+    <param name="device" type="string" value="/dev/video3" />
+  </node>
+  <node pkg="lane_detect" type="leftcam.py" name="leftcam" output="screen"></node>
+  <node pkg="lane_detect" type="middlecam.py" name="middlecam" output="screen"></node> 
+  <node pkg="lane_detect" type="rightcam.py" name="rightcam" output="screen"></node>
+  <node pkg="lane_detect" type="IPM" name="IPM" output="screen"></node>
+  <node pkg="lane_detect" type="dist_interpolater" name="dist_interpolator" output="screen"></node>
+</launch>

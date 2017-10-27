@@ -1,0 +1,12 @@
+<launch>
+  <!--<node pkg="lms1xx" type="set_config" name="set_config" args="set_config 192.168.0.1 0.25 50" />-->
+
+  <node pkg="tf" type="static_transform_publisher" name="odom" args="0.0 0.0 0.0 0.0 0.0 3.14 /laser /odom 10"/>
+
+  <param name="use_sim_time" value="true"/>
+
+  <node pkg="lms1xx" type="LMS1xx_node" name="lidar" />
+
+  <node pkg="rviz" type="rviz" name="rviz" />
+
+</launch>

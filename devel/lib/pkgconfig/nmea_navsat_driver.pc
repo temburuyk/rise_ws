@@ -1,0 +1,8 @@
+prefix=/home/yashwant/rise_ws/devel
+
+Name: nmea_navsat_driver
+Description: Description of nmea_navsat_driver
+Version: 0.5.0
+Cflags: 
+Libs: -L/home/yashwant/rise_ws/devel/lib 
+Requires: 

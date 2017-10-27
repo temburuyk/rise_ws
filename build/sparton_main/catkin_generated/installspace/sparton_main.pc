@@ -1,0 +1,8 @@
+prefix=/home/yashwant/rise_ws/install
+
+Name: sparton_main
+Description: Description of sparton_main
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/yashwant/rise_ws/install/lib 
+Requires: 

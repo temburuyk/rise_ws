@@ -1,0 +1,40 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/yashwant/rise_ws/src/roboteq/include/ErrorCodes.h
+
+/home/yashwant/rise_ws/src/roboteq/include/RoboteqDevice.h
+
+/home/yashwant/rise_ws/src/roboteq/src/Libraries/RoboteqDevice.cpp
+iostream
+-
+stdio.h
+-
+string.h
+-
+fcntl.h
+-
+errno.h
+-
+termios.h
+-
+time.h
+-
+sstream
+-
+unistd.h
+-
+ctime
+-
+cerrno
+-
+RoboteqDevice.h
+/home/yashwant/rise_ws/src/roboteq/src/Libraries/RoboteqDevice.h
+ErrorCodes.h
+/home/yashwant/rise_ws/src/roboteq/src/Libraries/ErrorCodes.h
+

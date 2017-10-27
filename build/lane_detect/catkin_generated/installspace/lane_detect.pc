@@ -1,0 +1,8 @@
+prefix=/home/yashwant/rise_ws/install
+
+Name: lane_detect
+Description: Description of lane_detect
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/yashwant/rise_ws/install/lib 
+Requires: 

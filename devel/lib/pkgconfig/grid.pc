@@ -1,0 +1,8 @@
+prefix=/home/yashwant/rise_ws/devel
+
+Name: grid
+Description: Description of grid
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/yashwant/rise_ws/devel/lib 
+Requires: nav_msgs roscpp rospy std_msgs message_runtime
